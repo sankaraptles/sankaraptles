@@ -51,9 +51,9 @@ contacts:
   #- github: ""
   #- email: ""
   #- linkedin: ""
-  #- twitter: ""
+  - twitter: "sankar_ram0"
   #- mastodon: ""
-  #- instagram: ""
+  - instagram: "sankar_apt"
   #- youtube: ""
   #- facebook: ""
 # to add more, check the _data/const/contact.yml file
