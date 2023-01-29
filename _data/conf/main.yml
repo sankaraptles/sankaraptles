@@ -49,7 +49,7 @@ language_switch_top_nav: false
 brand_replace: "Sankar S"
 
 # replace text with data.lang[language].constants.greeting
-greetings_replace: "$site_greetings"
+greetings_replace: "Welcome to the blog"
 
 # replace text with data.lang[language].constants.welcome
 welcome_replace: "Welcome"
