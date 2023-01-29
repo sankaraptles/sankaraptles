@@ -62,7 +62,7 @@ This is a blog on Time Series Analyis of methods such as ARIMA and Exponential S
 
 ***
 
-### Paragraphs
+### Paragraphss
 
 #### Introduction
 
