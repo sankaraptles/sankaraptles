@@ -174,7 +174,7 @@ From the output, it can be stated that the test-statistics value for training an
 An autoregressive integrated moving average (ARIMA) is the generalization of the ARMA model. ARIMA model is used to forecast or predict the data using historical data in the time series data. ARIMA model can work both with stationary and non-stationary data series. For this analysis, the trend is made stationary for the future prediction of BOP values of FDI of India.
 The modelling of the ARIMA can be done using two ways, automatic method and manual method.  
 
-##### AutoARIMA:  
+##### AutoARIMA  
 
 ARIMA model involves three elements ARIMA(p,d,q) such as p=order of the autoregressive part; d=degree of first differencing involved; q=order of the moving average part.
 After modelling the series using Auto ARIMA, forecasting of the data has to be done using the model framed using Auto ARIMA.  
@@ -201,7 +201,7 @@ accuracy(arfc,diff.testar)
 
 ![AutoARIMA Forecast](:Rplot2.png){:data-align="center"}
 
-##### ARIMA by Manual Method:  
+##### ARIMA by Manual Method  
 
 The manual method of ARIMA involves identifying the optimal values of p, d and q using the loop function to identify the solution.  
 
