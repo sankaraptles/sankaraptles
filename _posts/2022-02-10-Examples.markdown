@@ -75,113 +75,356 @@ Predictive analytics and machine learning are often used in conjunction with tim
 #### Overview of the data set used for analysis
 
 The original data set contains information regarding India’s overall balance of payments (BOP).
-The data provided ranges from the period of 2000-2001 to 2021-2022 for 4 quarters in a year. This shows that the raw give data is of time series in nature.
+The data provided ranges from the period of 2000-2001 to 2021-2022 for 4 quarters in a year. This shows that the raw give data is of time series in nature. The more information on the time series analysis will be covered in analysis section. The values are mentioned in Indian Rupees and are denoted in crores. The transaction type involved are in the form of credit, debit and net value of the BOP. The overall data set consists BOP values for various sectors such as merchandise, transportation, travel, income and various elements.  
 
-#### Texts
+The data element used for the analysis is “B.1.a.1) Foreign Direct Investment in India”. In the mentioned element, the credit part for each quarter has to be estimated for the upcoming quarter periods with the help of this historical data which ranges from 2000 to 2022.  
 
-Quoted text `Hello world`
+#### Overview of the Data
 
-Bold text **Hello world**
+The data set consists of 264 observations for each transaction type and for each quarter. Out of this, the transaction type of credit consists of about 88 observations. This observation forms as the basis for the forecasting for future time periods.
+Numerous methods are available for forecasting the time series data such as Naïve methods, Exponential smoothing, ARIMA models etc., For the analysis of the BOP values of FDI in India, the methods such as ARIMA and Exponential smoothing will be used. The analysis involves comparison of the forecasting by these two models and assessing the forecasted data for future period. In this analysis, the data are forecasted for next 6 periods such as for next 6 quarters.  
 
-Italic text _Hello world_
+#### Analysis
 
-kbd text <kbd>Hello world</kbd>
+To begin with the analysis, the required libraries has to be installed and are being imported into the working R environment. It can be done with the help of the following code.  
 
-#### Blockquote
-
-> **William Shakespeare**, Let me not to the marriage of true minds
-> Admit impediments. Love is not love
-> Which alters when it alteration finds,
-> Or bends with the remover to remove.
-> O no, it is an ever-fixed mark
-> That looks on tempests and is never shaken;
-> It is the star to every wand'ring barque,
-> Whose worth's unknown, although his height be taken.
-> Love's not Time's fool, though rosy lips and cheeks
-> Within his bending sickle's compass come;
-> Love alters not with his brief hours and weeks,
-> But bears it out even to the edge of doom.
-> If this be error and upon me proved,
-> I never writ, nor no man ever loved.
-
-### Link
-
-This is [Mr. Green Jekyll Theme](https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme), a simple theme built for [Jekyll](https://jekyllrb.com/).
-
-\* Hello world! This is **[{{ site.data.owner[site.data.conf.main.default_lng].brand }}]({{ site.url }})**
-
-### Picture
-
-![such a lovely place](:post_pic1.jpg)
-
-### Picture (centered)
-
-![such a lovely place](:post_pic1.jpg){:data-align="center"}
-
-### Lists
-
-- Apple
-- Banana
-- Orange
-
-1. Fruits
-   1. Apples
-      - Granny Smith
-      - Mutsu
-   1. Bananas
-      - Cavendish
-      - Red
-1. Vegetables
-
-***
-
-### Tables
-
-#### Small Table (centered)
-
-| Fruits(not aligned) | Alignment (centered) | num (right align) |
-| ------------------- | :------------------: | ----------------: |
-| Apple               |       centered       |              9999 |
-| Banana              |  centered long text  |               999 |
-| Orange              |       centered       |                99 |
-| Lemon               |       centered       |                 9 |
-{:data-align="center"}
-
-#### Wide Table (centered)
-
-scroll enabled when page is narrow
-
-| Fruits | num (left align) | num (right align) | num  | num  | num  |
-| ------ | :--------------- | ----------------: | ---- | ---- | ---- |
-| Apple  | 1111             |              1111 | 2222 | 3333 | 4444 |
-| Banana | 111              |               111 | 222  | 333  | 444  |
-| Orange | 11               |                11 | 22   | 33   | 44   |
-| Lemon  | 1                |                 1 | 2    | 3    | 4    |
-{:data-align="center"}
-
-#### Wider Table
-
-scroll enabled when page is narrow
-
-| Fruits | num (left align) | num (right align) | num  | num  | num  | num  | num  | num  |
-| ------ | :--------------- | ----------------: | ---- | ---- | ---- | ---- | ---- | ---- |
-| Apple  | 1111             |              1111 | 2222 | 3333 | 4444 | 5555 | 6666 | 7777 |
-| Banana | 111              |               111 | 222  | 333  | 444  | 555  | 666  | 777  |
-| Orange | 11               |                11 | 22   | 33   | 44   | 55   | 66   | 77   |
-| Lemon  | 1                |                 1 | 2    | 3    | 4    | 5    | 6    | 7    |
-
-### Code
-
-#### Highlight
 
 {% highlight python %}
-for i in range(5, 10):
-  print(i)
+###### Installing required libraries (Remove "#" and run the below command to install)
+#install.packages("readxl")
+#install.packages("forecast")
+#install.packages("tidyverse")
+#install.packages("fpp2")
+#install.packages("fUnitRoots")
+
+## Loading required libraries
+library(readxl)
+library(forecast)
+library(tidyverse)
+library(fpp2)
+library(fUnitRoots)
 {% endhighlight %}
 
-#### Quote
+
+
+After importing the required libraries into the working environment, the data set which is in the form of excel file can be imported into the R environment using a library called “readxl”. The library supports various functions which helps in selective importing of data from the excel sheet. The library also supports multiple worksheets in a excel file and selective range selection in the excel file by providing the range of the cell values in the code.  
+
+After importing the required data into R, the first preliminary step before proceeding with any analysis or modelling of the data is checking for any NA values in the data set. The presence of “NA” values may not be of much importance in the initial stage but it have major impact in the analysis and modelling of the data for prediction and forecasting of the data. The identification of “NA” values and its replacement can be done with the help of the following code.  
+
+
+{% highlight python %}
+## To identify "NA" values in the data
+is.na(ar8)
+ar9<-as.vector(t(ar8))
+Na<-which(is.na(ar9)==TRUE)[1]
+Na
+{% endhighlight %}
+
+
+For our forecasting for FDI in India, there is no “NA” values present in the data and thus, the final code is not run. The code can be used if “NA” value is present in the data.
+After done with the preliminary checking, the data frame has to be converted to a time series object in order to perform the modelling of ARIMA.  
+
+
+{% highlight python %}
+## Converting the data to time series object
+ar10<-ts(ar9,start=c(2000,1),frequency=4) #frequency=4, since its a quarterly data
+ar10 #To view the time series object
+autoplot(ar10, xlab="Year", ylab="BOP - Quarterly - Rupees Crore")
+{% endhighlight %}
+
+In the above code, frequency is being mentioned as 4 since the given data in of quarterly. If its monthly data, “frequency = 12” can be used to get the monthly data.  
+
+![Time Series Plot](:Rplot01.png)
+
+The modelling of ARIMA requires splitting of the data set into Training and Testing set for the prediction of the data. The data from 2000 to 2018 Is being used for training the model and from 2019 to 2022 is being used for testing the model.  
+
+Unlike ARMA model, ARIMA model can work also with non-stationary data. But for this prediction, the data is being made into stationary using “diff” function. The function is applied to both the training and testing data set.  
+
+{% highlight python %}
+## splitting data into train and test data set
+trainar <- window(ar10, end=c(2018,4)) #Training data up-to year 2018
+testar <- window(ar10, start=c(2019,1)) #Testing data from year 2019
+
+## Removing trends from the training data to make it stationary
+diff.trainar<-diff(trainar)
+autoplot(diff.trainar,xlab="Year",ylab="BOP")
+
+# removing trend from test set
+diff.testar <- diff(testar)
+autoplot(diff.testar,xlab="Year",ylab="BOP")
+{% endhighlight %}
+
+To check the presence of any seasonality in the data set, KPSS test can be used to determine the presence of any trend in the data set.  
+
+{% highlight python %}
+#KPSS Test (testing for stationarity of the given series)
+library(urca)
+summary(ur.kpss(diff.trainar))
+summary(ur.kpss(diff.testar))
+{% endhighlight %}
+
+Output of KPSS Test:
 
 ```python
-for i in range(5, 10):
-  print(i)
+####################### 
+# KPSS Unit Root Test # 
+####################### 
+
+Test is of type: mu with 3 lags. 
+
+Value of test-statistic is: 0.0756 
+
+Critical value for a significance level of: 
+                10pct  5pct 2.5pct  1pct
+critical values 0.347 0.463  0.574 0.739
+
+> summary(ur.kpss(diff.testar))
+
+####################### 
+# KPSS Unit Root Test # 
+####################### 
+
+Test is of type: mu with 2 lags. 
+
+Value of test-statistic is: 0.2267 
+
+Critical value for a significance level of: 
+                10pct  5pct 2.5pct  1pct
+critical values 0.347 0.463  0.574 0.739
 ```
+
+From the output, it can be stated that the test-statistics value for training and testing set is 0.0756 and 0.2267 respectively which is below the critical value. This means that there is no non-stationary element in the data.  
+
+#### Forecasting using ARIMA model
+
+An autoregressive integrated moving average (ARIMA) is the generalization of the ARMA model. ARIMA model is used to forecast or predict the data using historical data in the time series data. ARIMA model can work both with stationary and non-stationary data series. For this analysis, the trend is made stationary for the future prediction of BOP values of FDI of India.
+The modelling of the ARIMA can be done using two ways, automatic method and manual method.  
+
+##### AutoARIMA:  
+
+ARIMA model involves three elements ARIMA(p,d,q) such as p=order of the autoregressive part; d=degree of first differencing involved; q=order of the moving average part.
+After modelling the series using Auto ARIMA, forecasting of the data has to be done using the model framed using Auto ARIMA.  
+
+For forecasting the model, the function “forecast” is being used to perform the forecasting of the model. The forecasting is done for the next 6 periods. The “h” mentions the number of periods of forecast. In this case, h=6. The summary of the forecast can be obtained by the function summary(). It provides the detailed summary report of the forecasting of the ARIMA model.  
+
+
+
+{% highlight python %}
+## Auto ARIMA
+armodel<-auto.arima(diff.trainar, trace=TRUE)
+armodel
+plot.ts(armodel$residuals,xlab="Year",ylab="Residuals")
+
+## Forecasting Auto ARIMA Model
+arfc <- forecast(armodel, level = c(95), h=6)
+plot(arfc,main="Auto ARIMA Forecast",xlab="Year",ylab="Point")
+lines(diff.testar)
+summary(arfc) #summary of the forecast
+
+## Accuracy of the model
+accuracy(arfc,diff.testar)
+{% endhighlight %}  
+
+![AutoARIMA Forecast](:Rplot02.png)
+
+##### ARIMA by Manual Method:  
+
+The manual method of ARIMA involves identifying the optimal values of p, d and q using the loop function to identify the solution.  
+
+After model is framed, forecasting of the data can be made. The forecasting of the ARIMA model by manual method can be done by the following code.  
+
+{% highlight python %}
+## Check the p-value for significance
+
+getrmse <- function(x,h,...)
+{
+  train.end <- time(x)[length(x)-h]
+  test.start <- time(x)[length(x)-h+1]
+  train <- window(x,end=train.end)
+  test <- window(x,start=test.start)
+  fit <- Arima(train,...)
+  fc <- forecast(fit,h=h)
+  return(accuracy(fc,test)[2,"RMSE"])
+}
+getrmse(diff.trainar,h=6,order=c(3,0,0),seasonal=c(2,1,0),lambda=0)
+getrmse(diff.trainar,h=6,order=c(3,0,1),seasonal=c(2,1,0),lambda=0)
+getrmse(diff.trainar,h=6,order=c(3,0,2),seasonal=c(2,1,0),lambda=0)
+getrmse(diff.trainar,h=6,order=c(3,0,1),seasonal=c(1,1,0),lambda=0)
+
+## ARIMA Model
+fit5<-arima(diff.trainar,order=c(3,0,1),seasonal=c(0,1,2))
+fit5
+## Forecasting ARIMA model for next 6 period
+aarfc<-forecast(fit5,h=6)
+autoplot(aarfc,ylab="BOP",xlab="Year")
+plot(aarfc)
+lines(diff.testar)
+checkresiduals(aarfc)
+summary(aarfc) #Summary of the forecast
+accuracy(aarfc,diff.testar)
+{% endhighlight %}  
+
+![ARIMA Forecast](:Rplot03.png)  
+
+#### Forecasting using Exponential Smoothing
+
+The exponential smoothing is a technique used for smoothing of the time series data using an exponential function. In this method, the exponential function assigns decreasing weights over a period of time. The higher weightage is given on the most recent observations and lesser weightage on the older observations.  
+
+There are various exponential smoothing techniques. Some of the most important methods are
+• Simple Exponential Smoothing
+• Holt’s Method
+• Holt-Winter’s Seasonal Method
+• Damped Trend Method  
+
+The data which is to be forecasted can be imported into the R environment using a library called “readxl”. After done with the preliminary checks such as outlier and presence of “NA” values, the data has to be converted into time series object to begin with the modelling and forecasting of the data.  
+
+{% highlight python %}
+## Converting the dataframe to a timeseries object
+
+data19<-ts(data18,start=c(2000,1),end=c(2021,4),frequency=4)
+data19
+autoplot(data19,xlab="Year", ylab="BOP - Quarterly - Rupees Crore")
+
+## splitting data into train and test data set
+traines <- window(data19, end=c(2018,4))
+testes <- window(data19, start=c(2019,1))
+
+## Removing trends from the training data to make it stationary
+diff.traindata<-diff(traines)
+autoplot(diff.traindata)
+
+# removing trend from test set
+diff.testdata <- diff(testes)
+autoplot(diff.testdata)
+{% endhighlight %}  
+
+![Time Series Plot](:Rplot04.png) 
+
+##### Simple Exponential Smoothing
+
+The simple exponential smoothing is used for data that shows no trend or any seasonality pattern in it. It uses a smoothing parameter called “alpha”. The value of alpha lies between 0 and 1. The simple exponential smoothing can be done with the help of a function called “ses()”.  
+
+The trends in the data have to be removed for performing the simple exponential smoothing. The trends can be removed with the help of a function called “diff”.  
+
+{% highlight python %}
+## Simple Exponential Smoothing Model with alpha = 0.2 
+ses.data21<-ses(diff.traindata, alpha=0.2) # smoothing constant (alpha)
+ses.data21$model
+summary(ses.data21)
+autoplot(ses.data21)
+
+## Forecasting the data for next 6 periods
+fc.ses.data21<-forecast(ses.data21,h=6)
+autoplot(fc.ses.data21)
+
+## Accuracy of the model
+accuracy(fc.ses.data21,diff.testdata)
+{% endhighlight %}  
+
+![Simple Exponential Smoothing Forecast](:Rplot05.png)   
+
+##### Holt's Method
+
+Unlike simple exponential smoothing, holt’s method can work with data having trends but not seasonality. In Holt’s method, it uses two parameters namely, alpha and beta which corresponds to the level and trend components respectively. The method can be performed using a function called “holt()”.  
+
+{% highlight python %}
+####### Exponential Smoothing Model with a trend (Holt's Method)
+
+traines <- window(data19, end=c(2018,4))
+testes <- window(data19, start=c(2019,1))
+holtes <- holt(traines,h=6)
+plot(holtes)
+lines(testes) #Matching forecast with testing data
+
+print(summary(holtes))
+
+## Holte's Method
+holtes$model
+
+## Accuracy of the model
+accuracy(holtes, testes)
+{% endhighlight %}  
+
+![Holt's Method Forecast](:Rplot06.png) 
+
+##### Holt-Winter’s Seasonal Method
+
+The Holt-Winter’s seasonal method can work well with both the trend and seasonality. This method uses three parameters namely alpha, beta and gamma. This method uses either additive structure or multiplicative structure. It uses a function called “ets()” to perform the modelling.  
+
+###### Additive Model
+
+{% highlight python %}
+####### Holt-Winter’s Seasonal Method (AAA Model)
+
+traines <- window(data19, end=c(2018,4))
+testes <- window(data19, start=c(2019,1))
+
+autoplot(decompose(data19))
+
+## Applying ETS
+etsdata20 <- ets(traines, model="AAA")
+autoplot(etsdata20)
+
+##Assessing the model
+summary(etsdata20)
+checkresiduals(etsdata20)
+
+## Forecasting the data for next 6 periods
+fcetsdata20 <- forecast(etsdata20,h=6)
+autoplot(fcetsdata20)
+
+summary(fcetsdata20)
+
+## Accuracy of the model
+accuracy(fcetsdata20,testes)
+{% endhighlight %}  
+
+![ETS (AAA Model) Forecast](:Rplot07.png) 
+
+###### Multiplicative Model
+
+{% highlight python %}
+####### Holt-Winter’s Seasonal Method (MAM Model)
+
+traines <- window(data19, end=c(2018,4))
+testes <- window(data19, start=c(2019,1))
+
+autoplot(decompose(data19))
+
+## Applying ETS
+etsmdata20 <- ets(traines, model="MAM")
+autoplot(etsmdata20)
+
+##Assessing the model
+summary(etsmdata20)
+checkresiduals(etsmdata20)
+
+## Forecasting the data for next 6 periods
+fcetsmdata20 <- forecast(etsmdata20,h=6)
+autoplot(fcetsmdata20)
+
+## Accuracy of the model
+accuracy(fcetsmdata20,testes)
+{% endhighlight %}  
+
+![![ETS (AAA Model) Forecast](:Rplot07.png) ](:Rplot08.png) 
+
+#### Conclusion
+
+Among various forecasting methods for time series data, Exponential Smoothing and ARIMA model are most commonly used. ARIMA model can work with stationary as well as trend factor in the data and provides most optimal forecasting. Exponential Smoothing have various techniques and some techniques can work both with trend component as well as seasonal component.  
+
+Various factors are being used to compare the forecasting accuracy and fit of the forecasting model. Some of the factors which are being used to assess the model are Mean Error (ME), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), Mean Percentage Error (MPE), Mean Absolute Percentage Error (MAPE) and Mean Absolute Scaled Error (MASE).  
+
+One of the important factors for comparing the model are RMSE. For ARIMA model, the value of RMSE is about 0.26 and for Exponential Smoothing techniques such as simple exponential smoothing, Holt’s model, Holt-Winter’s seasonal method (AAA Model), Holt-Winter’s seasonal method (MAM Model) are 16328.45, 11859.12, 11910.62 and 13376.16 respectively.  
+
+The lesser value of RMSE shows better fit of the model. ARIMA model shows better predictability of the forecasting of the time series data. The MAE for ARIMA is 0.1986539 and Exponential Smoothing are 8959.243, which shows that ARIMA model have better forecasting.
+
+**
+Sankara Rama Pandian S,
+CB.BU.P2MBA21103,
+5th Trimester, MBA,
+Amrita Dchool of Business,
+Amrita Vishwa Vidyapeetham, Coimbatore.
+**  
+
+**“This blog is part of the assignments submitted for the course, Time series Analysis and Forecasting/one of the Business Analytics Electives Courses at Amrita”**
