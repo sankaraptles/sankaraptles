@@ -53,13 +53,6 @@ It is a technique used to analyze time-based data and make predictions. This met
 Time series forecasting models can help make short-term and long-term predictions and can identify trends and patterns in the data, allowing for more informed decisions.
 Predictive analytics and machine learning are often used in conjunction with time series forecasting models.
 
-#### Overview of the data set used for analysis
-
-The original data set contains information regarding India’s overall balance of payments (BOP).
-The data provided ranges from the period of 2000-2001 to 2021-2022 for 4 quarters in a year. This shows that the raw give data is of time series in nature. The more information on the time series analysis will be covered in analysis section. The values are mentioned in Indian Rupees and are denoted in crores. The transaction type involved are in the form of credit, debit and net value of the BOP. The overall data set consists BOP values for various sectors such as merchandise, transportation, travel, income and various elements.  
-
-The data element used for the analysis is “B.1.a.1) Foreign Direct Investment in India”. In the mentioned element, the credit part for each quarter has to be estimated for the upcoming quarter periods with the help of this historical data which ranges from 2000 to 2022.  
-
 #### Overview of the Data
 
 The data set consists of 264 observations for each transaction type and for each quarter. Out of this, the transaction type of credit consists of about 88 observations. This observation forms as the basis for the forecasting for future time periods.
