@@ -400,12 +400,10 @@ One of the important factors for comparing the model are RMSE. For ARIMA model, 
 
 The lesser value of RMSE shows better fit of the model. ARIMA model shows better predictability of the forecasting of the time series data. The MAE for ARIMA is 0.1986539 and Exponential Smoothing are 8959.243, which shows that ARIMA model have better forecasting.
 
-**
-Sankara Rama Pandian S,
+**Sankara Rama Pandian S,
 CB.BU.P2MBA21103,
 5th Trimester, MBA,
 Amrita Dchool of Business,
-Amrita Vishwa Vidyapeetham, Coimbatore.
-**  
+Amrita Vishwa Vidyapeetham, Coimbatore.**  
 
 **“This blog is part of the assignments submitted for the course, Time series Analysis and Forecasting/one of the Business Analytics Electives Courses at Amrita”**
