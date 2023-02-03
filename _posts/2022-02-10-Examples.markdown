@@ -396,7 +396,7 @@ The lesser value of RMSE shows better fit of the model. ARIMA model shows better
 **Sankara Rama Pandian S,  
 CB.BU.P2MBA21103,  
 5th Trimester, MBA,  
-Amrita Dchool of Business,  
+Amrita School of Business,  
 Amrita Vishwa Vidyapeetham, Coimbatore.**  
 
 **“This blog is part of the assignments submitted for the course, Time series Analysis and Forecasting/one of the Business Analytics Electives Courses at Amrita”**
