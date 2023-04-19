@@ -1,22 +1,22 @@
 ---
 # multilingual page pair id, this must pair with translations of this page. (This name must be unique)
 lng_pair: id_What_is_this
-title: "Welcome to Jekyll!"
+title: "Visualization of Cryptocurrency Price Change (BTC)"
 
 # post specific
 # if not specified, .name will be used from _data/owner/[language].yml
-author: Jekyll
+author: Sankara Rama Pandian S
 # multiple category is not supported
-category: jekyll
+category: R Analysis
 # multiple tag entries are possible
-tags: [jekyll, example post, sample, test]
+tags: [R, Data Visualization, cryptocurrency]
 # thumbnail image for post
 img: ":post_pic3.jpg"
 # disable comments on this page
 #comments_disable: true
 
 # publish date
-date: 2022-01-01 10:04:30 +0900
+date: 2023-04-19 11:45:34 +0900
 
 # seo
 # if not specified, date will be used.

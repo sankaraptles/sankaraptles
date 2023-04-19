@@ -11,7 +11,7 @@ category: R Analysis
 # multiple tag entries are possible
 tags: [R, Data Analysis, Time Series]
 # thumbnail image for post
-img: ":time-series-analysis.jpg"
+img: ":Types-of-scatter-graph.png"
 # disable comments on this page
 #comments_disable: true
 
