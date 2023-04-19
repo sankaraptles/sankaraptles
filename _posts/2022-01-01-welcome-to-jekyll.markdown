@@ -11,7 +11,7 @@ category: R Analysis
 # multiple tag entries are possible
 tags: [R, Data Visualization, cryptocurrency]
 # thumbnail image for post
-img: ":post_pic3.jpg"
+img: ":btc.png"
 # disable comments on this page
 #comments_disable: true
 
