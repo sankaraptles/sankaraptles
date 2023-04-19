@@ -252,3 +252,11 @@ Using a variety of visualisation tools, the research of bitcoin values has produ
 A visual picture of price patterns over the course of the year is provided by the heatmap of BTC closing prices over time. It demonstrates that the price of BTC often rises in the first half of the year, peaking in May, before falling in the second half. The heatmap also reveals that BTC prices peaked in 2017 and declined somewhat in 2018 and 2019.
 
 These visualisations bring to light the erratic nature of bitcoin values as well as the significance of comprehending the fundamental trends and forces at work. Cryptocurrency might be a high-risk investment, but for those who are ready to accept the chance, it can also yield big benefits. Before making any investing selections, it is crucial to carry out careful research and analysis.
+
+**Sankara Rama Pandian S,  
+CB.BU.P2MBA21103,  
+6th Trimester, MBA,  
+Amrita School of Business,  
+Amrita Vishwa Vidyapeetham, Coimbatore.**  
+
+**“This blog is part of the assignments submitted for the course, Data Visualization and Communication / one of the Business Analytics Electives Courses at Amrita”**
